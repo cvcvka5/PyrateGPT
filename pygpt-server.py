@@ -14,7 +14,8 @@ app = Flask(__name__)
 @app.route('/send', methods=['GET'])
 def send_prompt():
     prompt = request.args["prompt"]
-    gpt.send(prompt=prompt)
+    gpt.ask(prompt=prompt)
+    
     return jsonify({"status": "okay"})
 
 @app.route('/ask', methods=['GET'])
@@ -23,11 +24,11 @@ def ask_prompt():
     raw = "raw" in request.args.keys()
     pretty = "pretty" in request.args.keys()
     
-    
     response = gpt.ask(prompt=prompt)
+    
     if pretty: return response.replace("\n", "<br>")
     if raw: return response
-    return jsonify({"response": response})
+    return jsonify({"response": response, "status": "okay"})
 
 @app.route('/last', methods=['GET'])
 def last_message():

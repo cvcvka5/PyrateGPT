@@ -1,5 +1,5 @@
 () => {
-        function sleep(ms) {
+    function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
@@ -23,6 +23,12 @@
         return writingOrDone && notWriting
     }
 
+    // errors !sometimes! stem here
+    function isReadyToSend() {
+        return document.querySelector("button[aria-label='Yanıtlamayı durdur']") == null
+    }
+
+
     // Errors mostly stem from here
     function getLastMessage() {
         const msgs = document.querySelectorAll("article")
@@ -37,16 +43,25 @@
 
 
 
-    function sendPrompt(prompt) {
+    async function sendPrompt(prompt) {
+
+        while (!isReadyToSend()) {
+            await sleep(50)
+        }
+
+        await sleep(50)
         _setPrompt(prompt)
         setTimeout(_flushPrompt, 1)
+
     }
 
     async function askPrompt(prompt) {
         sendPrompt(prompt)
-        await sleep(1)
+
+        await sleep(50)
+        
         return new Promise(async resolve => {
-            while (!isReadyToRead()) { 
+            while (!isReadyToSend()) { 
                 await sleep(50)
             }
             resolve(getLastMessage())   
