@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 from pygpt import PyGPT
 from sys import argv
 from flask_limiter import Limiter
+import time
 
 gpt = PyGPT(fjs_base=open("./util/frame.txt", "r"), js_base_holder="//##PYGPT##", debug=True,
             finitprompt=open("./util/initprompt.txt"))
@@ -15,23 +16,21 @@ limiter = Limiter(
     app=app
 )
 
-
-@app.route('/send', methods=['GET'])
-@limiter.limit("1 per 5 seconds", error_message='1 per 5 seconds')
-def send_prompt():
-    prompt = request.args["prompt"]
-    gpt.ask(prompt=prompt)
-    
-    return jsonify({"status": "okay"})
-
 @app.route('/ask', methods=['GET'])
 @limiter.limit("1 per 5 seconds", error_message='1 per 5 seconds')
 def ask_prompt():
+    last_response = gpt.lastMessage
+    
     prompt = request.args["prompt"]
     raw = "raw" in request.args.keys()
     pretty = "pretty" in request.args.keys()
     
+    
     response = gpt.ask(prompt=prompt)
+        
+    if response == last_response:
+        time.sleep(2)
+        response = gpt.ask(prompt=prompt)
     
     if pretty: return response.replace("\n", "<br>")
     if raw: return response

@@ -1,1 +1,1 @@
-PyGPT v0.9.8b
+PyGPT v1.0.0

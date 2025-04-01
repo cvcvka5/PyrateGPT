@@ -19,15 +19,9 @@
     function isReadyToRead() {
         msg = getLastMessage()
         const writingOrDone = !(msg.charCodeAt(0) == 8203 || msg == "\n")
-        const notWriting = document.querySelector(".streaming-animation") == null
+        const notWriting = !(document.querySelector(".streaming-animation") != null || document.querySelector("*[class*=fadeIn]") != null)
         return writingOrDone && notWriting
     }
-
-    // errors !sometimes! stem here
-    function isReadyToSend() {
-        return document.querySelector("button[aria-label='Yanıtlamayı durdur']") == null
-    }
-
 
     // Errors mostly stem from here
     function getLastMessage() {
@@ -43,31 +37,19 @@
 
 
 
-    async function sendPrompt(prompt) {
-
-        while (!isReadyToSend() && !isReadyToRead()) {
-            await sleep(50)
-        }
-
-        await sleep(50)
+    function sendPrompt(prompt) {
         _setPrompt(prompt)
-        setTimeout(_flushPrompt, 1)
-
+        setTimeout(_flushPrompt, 50)
     }
 
     async function askPrompt(prompt) {
-        while (!isReadyToSend() && !isReadyToRead()) {
-            await sleep(50)
-        }
-        
         sendPrompt(prompt)
-
-        await sleep(50)
-        
+        await sleep(2000)
         return new Promise(async resolve => {
-            while (!isReadyToSend()) { 
-                await sleep(50)
+            while (!isReadyToRead()) { 
+                await sleep(100)
             }
+            await sleep(500)
             resolve(getLastMessage())   
         })
     }
