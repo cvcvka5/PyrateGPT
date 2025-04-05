@@ -3,12 +3,33 @@ monkey.patch_all()
 
 from flask import Flask, request, jsonify
 from pygpt import PyGPT
-from sys import argv
 from flask_limiter import Limiter
 import time
+import json
+import os.path
 
-gpt = PyGPT(fjs_base=open("./util/frame.txt", "r"), js_base_holder="//##PYGPT##", debug=True,
-            finitprompt=open("./util/initprompt.txt"))
+
+# Default Config
+# {
+#     "initPrompt": "util/initprompt.txt",
+#     "scriptJS": "util/inject.js",
+#     "scriptJSPlaceholder": "//##PYGPT##",
+#     "profilePath": "C:/selenium/ChromeProfile",
+#     "limiter": "1 per 5 seconds",
+#     "port": 1821,
+#     "GPTChatURL": null
+# }
+#
+config = None
+if os.path.exists("config.json"):
+    with open("config.json", "r") as config_file:
+        config = json.load(config_file)
+
+customGPThat = config["GPTChatURL"]
+
+gpt = PyGPT(fjs_base=open(config["scriptJS"], "r"), js_base_holder=config["scriptJSPlaceholder"], 
+            finitprompt=open(config["initPrompt"]), profilepath=config["profilePath"], gptchaturl=config["GPTChatURL"],
+            debug=True)
 
 app = Flask(__name__)
 limiter = Limiter(
@@ -17,7 +38,7 @@ limiter = Limiter(
 )
 
 @app.route('/ask', methods=['GET'])
-@limiter.limit("1 per 5 seconds", error_message='1 per 5 seconds')
+@limiter.limit(config["limiter"], error_message=config["limiter"])
 def ask_prompt():
     last_response = gpt.lastMessage
     
@@ -45,10 +66,7 @@ def last_message():
     if raw: return gpt.lastMessage
     return jsonify({"response": gpt.lastMessage})
 
-if __name__ == "__main__":
-    try:
-        port = int(argv[1])
-    except IndexError:
-        port = 1821
 
-    app.run(port=port)
+
+if __name__ == "__main__":
+    app.run(port=config["port"])

@@ -35,8 +35,6 @@
         
     }
 
-
-
     function sendPrompt(prompt) {
         _setPrompt(prompt)
         setTimeout(_flushPrompt, 50)
@@ -54,7 +52,5 @@
         })
     }
     
-
-    console.log('//##VERSION##')
     //##PYGPT##
 }

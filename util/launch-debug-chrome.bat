@@ -1,3 +1,0 @@
-@echo off
-start chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\selenium\ChromeProfile"
-exit \b
