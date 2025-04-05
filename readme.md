@@ -76,12 +76,12 @@ To run this project, you will need to add the following environment variables to
 
 ```json
 {
-    !"initPrompt": "The prompt that is sent on initialization you can make this null if you don't want to send an initialization prompt.",
-    !"scriptJS": "The script that initializes the javascript end for this project, you can add some additional js code if needed or the project is outdated.",
-    !"scriptJSPlaceholder": "The placeholder in inject.js that gets replaced on function calls for the bot to function.",
-    !"profilePath": "Chrome profile path",
-    !"limiter": "The server request limiter 'flask_limiter' that returns an error message if the user makes to many GET calls to the endpoint.",
-    !"port": "The port for the Flask endpoint to be hosted.",
+    "initPrompt (REQUIRED)": "The prompt that is sent on initialization you can make this null if you don't want to send an initialization prompt.",
+    "scriptJS (REQUIRED)": "The script that initializes the javascript end for this project, you can add some additional js code if needed or the project is outdated.",
+    "scriptJSPlaceholder (REQUIRED)": "The placeholder in inject.js that gets replaced on function calls for the bot to function.",
+    "profilePath (REQUIRED)": "Chrome profile path",
+    "limiter (REQUIRED)": "The server request limiter 'flask_limiter' that returns an error message if the user makes to many GET calls to the endpoint.",
+    "port (REQUIRED)": "The port for the Flask endpoint to be hosted.",
     "GPTChatURL": "A ChatGPT chat URL for the browser to redirect to. (if you're lazy or want to keep a persistent chat that you don't want to miss)"
 }
 ```
