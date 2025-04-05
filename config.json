@@ -2,8 +2,8 @@
     "initPrompt": "util/initprompt.txt",
     "scriptJS": "util/inject.js",
     "scriptJSPlaceholder": "//##PYGPT##",
-    "profilePath": "C:/selenium/ChromeProfile",
+    "profilePath": "x/x/PyrateGPTProfile",
     "limiter": "1 per 5 seconds",
     "port": 1821,
-    "GPTChatURL": "https://chatgpt.com/c/67ec6006-82f4-8001-a242-c81dfb3f8595"
+    "GPTChatURL": null
 }

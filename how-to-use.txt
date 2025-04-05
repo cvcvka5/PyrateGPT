@@ -1,9 +1,0 @@
-Run debug.py
-
-it will launch a window then go to chatgpt.
-you must login to your google account then to your chatgpt account. (it will be saved)
-then whenever it launches you must go to a random chat from the sidebar and press enter on the terminal to continue
-then thats it (you should use the init prompt)
-
-
-!! TEMA KARANLIK OLMALI

@@ -25,7 +25,6 @@ if os.path.exists("config.json"):
     with open("config.json", "r") as config_file:
         config = json.load(config_file)
 
-customGPThat = config["GPTChatURL"]
 
 gpt = PyGPT(fjs_base=open(config["scriptJS"], "r"), js_base_holder=config["scriptJSPlaceholder"], 
             finitprompt=open(config["initPrompt"]), profilepath=config["profilePath"], gptchaturl=config["GPTChatURL"],
