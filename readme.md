@@ -1,4 +1,4 @@
-
+# [DEPRECATED]
 # PyrateGPT
 
 A pirated-ish version of the ChatGPT API for test uses and small personal use projects.
